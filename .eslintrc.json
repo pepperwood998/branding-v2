@@ -16,7 +16,7 @@
     "ecmaVersion": 6,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "quotes": ["warn", "double"],
@@ -34,7 +34,8 @@
       {
         "allowSingleExtends": true
       }
-    ]
+    ],
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "react": {

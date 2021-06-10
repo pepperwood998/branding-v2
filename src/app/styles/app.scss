@@ -1,7 +1,109 @@
+@import "~antd/dist/antd.css";
 @import "variables";
+@import "utility";
 
 html,
 body {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 16px !important;
+}
+
+.pw-header {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  position: fixed;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+
+  .pw-header-menu {
+    line-height: 4rem;
+    border-bottom: none;
+    background-color: transparent;
+  }
+
+  .pw-header-search-bar {
+    width: 13rem;
+    height: 2rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
+.pw-body {
+  .pw-body-intro {
+    height: 480px;
+    background: url("/app/assets/images/halo-infinite-ring.png") no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+    .pw-body-intro-inner,
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    &::after {
+      content: "";
+      z-index: 1;
+      background-image: linear-gradient(
+        rgba(0, 0, 0, 0.45),
+        rgba(0, 0, 0, 0.18)
+      );
+    }
+
+    .pw-body-intro-inner {
+      z-index: 2;
+    }
+  }
+
+  .pw-body-skill {
+    padding: 2rem 0;
+  }
+
+  .pw-slide-viewer {
+    display: flex;
+    flex-direction: row;
+    height: 10rem;
+
+    .pw-slider {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: hidden;
+      position: relative;
+
+      .pw-slider-snapbox {
+        height: 6rem;
+        width: 6rem;
+      }
+
+      .pw-slider-inner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 6rem;
+      }
+    }
+
+    .pw-slider-item {
+      display: flex;
+      transition: transform 0.2s ease;
+
+      .icon {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
+
+    .pw-slide-content {
+      flex: 1;
+    }
+  }
 }
