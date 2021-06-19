@@ -1,30 +1,32 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import "./snap-slider.component.scss";
+import { ReactComponent as ArrowUpIcon } from "@/app/assets/svgs/arrow-up.svg";
+import { ReactComponent as ArrowDownIcon } from "@/app/assets/svgs/arrow-down.svg";
+import classNames from "classnames";
 
 const SnapSlider: React.FC<PropType> = ({
-  children,
   activeIndex = 0,
-  onChangeIndex = () => undefined,
+  data = [],
+  preview,
+  content,
 }) => {
   const snapboxRef = useRef(null);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const [current, setCurrent] = useState(0);
-  const [finalChildren, setFinalChildren] = useState<
-    JSX.Element[] | null | undefined
-  >();
+  const [previewElems, setPreviewElems] =
+    useState<JSX.Element[] | null | undefined>();
 
   const handleSelectItem = useCallback(
     (index: number) => {
-      setCurrent(index);
-      onChangeIndex(index);
+      let validIndex = index;
+      if (index < 0) {
+        validIndex = 0;
+      } else if (index > data.length - 1) {
+        validIndex = data.length - 1;
+      }
+      setCurrent(validIndex);
     },
-    [setCurrent, onChangeIndex],
+    [setCurrent, data.length],
   );
 
   useLayoutEffect(() => {
@@ -32,27 +34,32 @@ const SnapSlider: React.FC<PropType> = ({
   }, [activeIndex]);
 
   useLayoutEffect(() => {
-    itemRefs.current = itemRefs.current.slice(
-      0,
-      React.Children.toArray(children).length,
-    );
+    itemRefs.current = itemRefs.current.slice(0, data.length);
 
-    const finalChildren = React.Children.map(children, (child, index) => {
+    const previews = data.map((item, index) => {
       return (
-        <div
+        <li
+          key={index}
           className="pw-slider-item"
           ref={(elem) => (itemRefs.current[index] = elem)}
           onClick={() => handleSelectItem(index)}
         >
-          {child}
-        </div>
+          <div
+            className={classNames({
+              "pw-slider-item-inner": true,
+              "active": index === current,
+            })}
+          >
+            {preview(item, index)}
+          </div>
+        </li>
       );
     });
-    setFinalChildren(finalChildren);
-  }, [children, handleSelectItem]);
+    setPreviewElems(previews);
+  }, [data, preview, handleSelectItem, current]);
 
-  useEffect(() => {
-    const snapbox = (snapboxRef.current as unknown) as HTMLElement;
+  useLayoutEffect(() => {
+    const snapbox = snapboxRef.current as unknown as HTMLElement;
     const snapTop = snapbox.offsetTop;
     const snapHeight = snapbox.offsetHeight;
     const currentItem = itemRefs.current[current] as HTMLElement;
@@ -65,22 +72,42 @@ const SnapSlider: React.FC<PropType> = ({
         snapTop - currentTop - offset
       }px)`;
     });
-  }, [finalChildren, current]);
+  }, [previewElems, current]);
 
   return (
     <div className="pw-snap-slider">
       <div className="pw-slider">
+        <button
+          className={classNames({
+            "pw-slider-nav pw-slider-nav-prev": true,
+            "disabled": current === 0,
+          })}
+          onClick={() => handleSelectItem(current - 1)}
+        >
+          <ArrowUpIcon className="icon" />
+        </button>
         <div className="pw-slider-snapbox" ref={snapboxRef}></div>
-        <div className="pw-slider-inner">{finalChildren}</div>
+        <button
+          className={classNames({
+            "pw-slider-nav pw-slider-nav-next": true,
+            "disabled": current === data.length - 1,
+          })}
+          onClick={() => handleSelectItem(current + 1)}
+        >
+          <ArrowDownIcon className="icon" />
+        </button>
+        <ul className="pw-slider-inner">{previewElems}</ul>
       </div>
-      <div className="pw-content"></div>
+      <div className="pw-content">{content(data[current], current)}</div>
     </div>
   );
 };
 
 type PropType = {
   activeIndex?: number;
-  onChangeIndex?: (activeIndex: number) => void;
+  data?: any[];
+  preview: (item: any, index: number) => React.ReactNode;
+  content: (item: any, index: number) => React.ReactNode;
 };
 
 export default SnapSlider;

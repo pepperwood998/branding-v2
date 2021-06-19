@@ -1,4 +1,5 @@
 @import "~antd/dist/antd.css";
+@import "reset";
 @import "variables";
 @import "utility";
 
@@ -64,46 +65,7 @@ body {
   .pw-body-skill {
     padding: 2rem 0;
   }
-
-  .pw-slide-viewer {
-    display: flex;
-    flex-direction: row;
-    height: 10rem;
-
-    .pw-slider {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      overflow-y: hidden;
-      position: relative;
-
-      .pw-slider-snapbox {
-        height: 6rem;
-        width: 6rem;
-      }
-
-      .pw-slider-inner {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 6rem;
-      }
-    }
-
-    .pw-slider-item {
-      display: flex;
-      transition: transform 0.2s ease;
-
-      .icon {
-        width: 6rem;
-        height: 6rem;
-      }
-    }
-
-    .pw-slide-content {
-      flex: 1;
-    }
+  .pw-skill-content {
+    padding: 0 1rem;
   }
 }
