@@ -1,0 +1,26 @@
+.pw-home-intro {
+  height: 480px;
+  background: url("/app/assets/images/halo-infinite-ring.png") no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  .pw-home-intro-inner,
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  &::after {
+    content: "";
+    z-index: 1;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18));
+  }
+
+  .pw-body-intro-inner {
+    z-index: 2;
+  }
+}
