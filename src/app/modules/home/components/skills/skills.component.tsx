@@ -50,8 +50,8 @@ const snapSliderData = [
 const Skills: React.FC = () => {
   return (
     <div className="pw-home-skills">
-      <div className="mb-8 px-4">
-        <h3 className="text-center text-uppercase">Skills</h3>
+      <div className="pw-skill-title py-4 mb-4">
+        <h3 className="text-center text-uppercase mx-4">Skills</h3>
       </div>
       <SnapSlider
         data={snapSliderData}

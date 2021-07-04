@@ -40,8 +40,8 @@ const Projects: React.FC = () => {
 
   return (
     <div className="pw-home-project">
-      <div className="mb-8 text-white pt-6 px-4">
-        <h3 className="text-center text-uppercase">
+      <div className="pw-project-title py-4">
+        <h3 className="text-center text-uppercase text-white mx-4">
           Projects &amp; Experience
         </h3>
       </div>

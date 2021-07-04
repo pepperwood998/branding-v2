@@ -38,6 +38,10 @@ const App: React.FC = () => {
             </Route>
           </Switch>
         </div>
+
+        <div className="pw-footer text-white text-center">
+          <span>See Ya, Later!</span>
+        </div>
       </Router>
     </div>
   );
